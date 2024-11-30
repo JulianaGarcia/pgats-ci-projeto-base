@@ -1,14 +1,16 @@
-#CI de nivel 02 - Disparo automatico a partir de um horario definido 
+#CI de nivel 03 - Disparo automatico sempre que outro for concluído, como exemplo um deploy
 
 # nome que vai aparecer la nas opções de pipe 
-name: 'Execução Agendada'
+name: 'Execução por Deploy'
 
 # regras de disparo da execucao (Triggers OU gatilhos de execução)
-  #gatilhos de exec agendada = schedule
+  #gatilhos de exec após outro workflow = workflow_run
 on: 
-  schedule: 
-    - cron: '46 3 * * *'
-
+  workflow_run: 
+    workflows: [ 'Execução Manual' ]
+    types: 
+      - completed
+    
 
 jobs: 
 
