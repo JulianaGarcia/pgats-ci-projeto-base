@@ -7,7 +7,7 @@ name: 'Execução Agendada'
   #gatilhos de exec manual = schedule
 on: 
   schedule: 
-    - cron: '0 8 * * 1'
+    - cron: '40 9 * * *'
 
 
 jobs: 
