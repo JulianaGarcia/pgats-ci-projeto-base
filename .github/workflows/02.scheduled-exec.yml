@@ -1,42 +1,38 @@
-#CI de nivel 02 - Disparo automatico a partir de um horario definido 
+#CI de nivel 02 - Disparo automatico a partir de um horario definido
 
-# nome que vai aparecer la nas opções de pipe 
+# nome que vai aparecer la nas opções de pipe
 name: 'Execução Agendada'
 
 # regras de disparo da execucao (Triggers OU gatilhos de execução)
-  #gatilhos de exec agendada = schedule
-on: 
-  schedule: 
+#gatilhos de exec agendada = schedule
+on:
+  schedule:
     - cron: '46 3 * * *'
 
-
-jobs: 
-
-  # descrição do job 
-  e2e-tests: 
-
-    #maquina que o job vai executar 
+jobs:
+  # descrição do job
+  e2e-tests:
+    #maquina que o job vai executar
     runs-on: ['ubuntu-latest']
 
-    #passo a passo das acoes do job 
-    steps: 
-
+    #passo a passo das acoes do job
+    steps:
       - uses: actions/checkout@v4
 
       #- uses: actions/setup-node@v4
-      #  with: 
+      #  with:
       #    node-version: lts/*
 
       - name: Instalando Yarn
         run: npm install -g yarn
 
-      - name: Instalando dependências 
+      - name: Instalando dependências
         run: yarn
 
-      - name: Instalando Playwright 
-        run: yarn playwright install 
+      - name: Instalando Playwright
+        run: yarn playwright install
 
-      - name: Testes E2E (end-to-end) 
+      - name: Testes E2E (end-to-end)
         run: yarn run e2e
 
       # passed, failed, cancelled
@@ -45,6 +41,3 @@ jobs:
         with:
           name: relatorio-de-testes
           path: ./playwright-report
-
-
-
