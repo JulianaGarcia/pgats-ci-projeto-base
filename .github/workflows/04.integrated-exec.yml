@@ -1,27 +1,38 @@
-#CI de nivel 03 - Disparo automatico sempre que outro for concluído, como exemplo um deploy
+#CI de nivel 04 - Disparo dentro do fluxo de CI de desenvolvimento 
 
 # nome que vai aparecer la nas opções de pipe 
-name: 'Execução por Deploy'
+name: 'Execução Integrada'
 
 # regras de disparo da execucao (Triggers OU gatilhos de execução)
-  #gatilhos de exec após outro workflow = workflow_run
+  #gatilhos de exec manual = workflow_dispatch
 on: 
-  workflow_run: 
-    workflows: [ 'Execução Manual' ]
-    types: 
-      - completed
-    
+  workflow_dispatch: 
+
 
 jobs: 
+
+  inspection: 
+    runs-on: ['ubuntu-latest']
+
+    steps: 
+      - uses: actions/checkout@v4
+
+      - name: Instalando Yarn
+        run: npm install -g yarn
+
+      - name: Instalando dependências 
+        run: yarn
+
+      - name: Padronizacao de codigo (Lint)
+        run: yarn lint
+
+        
 
   # descrição do job 
   e2e-tests: 
 
     #maquina que o job vai executar 
     runs-on: ['ubuntu-latest']
-
-    #executar apenas se o built for feito com sucesso
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     #passo a passo das acoes do job 
     steps: 
