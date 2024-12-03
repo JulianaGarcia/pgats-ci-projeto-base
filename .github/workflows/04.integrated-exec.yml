@@ -48,10 +48,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      #- uses: actions/setup-node@v4
-      #  with:
-      #    node-version: lts/*
-
       - name: Instalando Yarn
         run: npm install -g yarn
 
@@ -61,8 +57,14 @@ jobs:
       - name: Instalando Playwright
         run: yarn playwright install
 
+      #subir aplicacao localmente na porta 3000
+      - name: Subir aplicacao local 
+        run: yarn start &    
+
       - name: Testes E2E (end-to-end)
         run: yarn run e2e
+        env: 
+          URL: http://localhost:3000/
 
       # passed, failed, cancelled
       - uses: actions/upload-artifact@v4
